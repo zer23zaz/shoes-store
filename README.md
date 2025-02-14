@@ -73,8 +73,16 @@ npm install next-themes
 <h3 style="color:orange; font-weight:bold;;">Prisma Setup Command</h3>
 
 ```
-npm i -D prisma @prisma/client
-npx prisma init
+npm i -D prisma @prisma/client  (INSTALL PRISMA & PRISMA CLIENT)
+npx prisma init  (PRISMA INITIALIZATION)
+
+
+npx prisma generate  (GENERATE CLIENT)
+npx prisma migrate dev --name init  (MIGRATE MODEL)
+
+npx tsx ./db/seed (SEED DATABASE)
+
+npx prisma studio  (RUN PRISMA STUDIO TOOL)
 ```
 
 ## Deploy on Vercel
