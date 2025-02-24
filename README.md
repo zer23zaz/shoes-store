@@ -64,6 +64,8 @@ npx shadcn@latest add button
 npx shadcn@latest add dropdown-menu
 npx shadcn@latest add sheet
 npx shadcn@latest add card
+npx shadcn@latest add label
+npx shadcn@latest add input
 ```
 
 ```
@@ -92,6 +94,9 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
+GIT Branch
+```
 git log --oneline
-git push origin feature/session-no
 git branch feature/session-no commit_id
+git push origin feature/session-no
+```
