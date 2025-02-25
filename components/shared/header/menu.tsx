@@ -36,7 +36,6 @@ const Menu = () => {
                             </Button>
                             <UserButton />
                         </div>
-
                     </SheetContent>
                 </Sheet>
             </nav>

@@ -62,7 +62,6 @@ const UserButton = async () => {
 
         </div>
     </>)
-
 }
 
 export default UserButton;
