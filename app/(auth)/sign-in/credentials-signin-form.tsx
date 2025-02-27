@@ -32,7 +32,7 @@ const CredentialsSignInForm = () => {
     }
     return (
         <form action={action}>
-            <input type='hidden' name='callbackUrl' value={callbackUrl}/>
+            <input type='hidden' name='callbackUrl' value={callbackUrl} />
             <div className="space-y-4">
                 <div>
                     <Label htmlFor="email">Email</Label>
@@ -45,7 +45,7 @@ const CredentialsSignInForm = () => {
                 </div>
 
                 <div>
-                    <SignInButton/>
+                    <SignInButton />
                 </div>
 
                 {data && !data.success && (
@@ -55,7 +55,7 @@ const CredentialsSignInForm = () => {
                 )}
                 <div className="text-sm text-center text-muted-foreground">
                     Don&apos;t have an account? {' '}
-                    <Link href='/sign-ui' target="_self" className="link">
+                    <Link href='/sign-up' target="_self" className="link">
                         Sign Up
                     </Link>
                 </div>
