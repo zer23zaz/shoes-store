@@ -21,6 +21,9 @@ const SignInPage = async (props: {
     if (session) {
         return redirect(callbackUrl || '/');
     }
+    // if (Math.random() > 0.5) {
+    //     throw new Error('Critical error on sign in page.');
+    // }
 
     return (
         <div className="w-full max-w-md mx-auto">

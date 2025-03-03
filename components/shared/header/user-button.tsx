@@ -38,13 +38,13 @@ const UserButton = async () => {
                         </Button>
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent align="start" className="w-56 md:mr-4">
                     <DropdownMenuLabel className="w-56">
                         <div className="flex flex-col space-y-1">
-                            <div className="text-sm font-medium leading-none">
+                            <div className="text-sm font-bold leading-none">
                                 {session.user?.name}
                             </div>
-                            <div className="text-sm text-muted-foreground leading-none">
+                            <div className="text-sm font-normal leading-none text-gray-600">
                                 {session.user?.email}
                             </div>
                         </div>

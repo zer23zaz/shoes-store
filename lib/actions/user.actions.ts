@@ -5,6 +5,7 @@ import { signInFormSchema, signUpFormSchema } from "../validator";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "@/db/prisma";
+import { handleError } from "../utils";
 
 // Sign in user with credentials
 export async function signInWithCredentials(prevState: unknown, formData: FormData) {
@@ -67,7 +68,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
         if (isRedirectError(error)) {
             throw error;
         }
-        return { success: false, message: 'User registration failed, please try again.' } 
+        return { success: false, message: handleError(error) } 
     }
 
 }

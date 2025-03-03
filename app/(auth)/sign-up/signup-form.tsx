@@ -12,12 +12,14 @@ import { signUpFormSchema } from "@/lib/validator";
 import { signUpUser } from "@/lib/actions/user.actions";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/';
     const [actionError, setActionError] = useState<string | null>(null);
+    const router = useRouter();
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignUpFormSchemaType>({
         resolver: zodResolver(signUpFormSchema),
@@ -42,6 +44,9 @@ const SignUpForm = () => {
             }
         } catch (error) {
             console.log(error);
+            if (isRedirectError(error)) { 
+                router.refresh();
+            }
             setActionError("An unexpected error occurred. Please try again.");
         }
     }
