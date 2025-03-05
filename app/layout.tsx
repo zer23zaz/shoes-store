@@ -3,7 +3,8 @@ import { Roboto } from "next/font/google";
 import "@/assets/styles/globals.css";
 import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ErrorWrapper } from "./error-wrapper";
+import { Toaster } from "@/components/ui/sonner"
+// import { ErrorWrapper } from "./error-wrapper";
 
 const roboto = Roboto({
     weight: ['300', '700'],
@@ -29,9 +30,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <ErrorWrapper>
-                        {children}
-                    </ErrorWrapper>
+                    {/* <ErrorWrapper> */}
+                    {children}
+                    <Toaster />
+                    {/* </ErrorWrapper> */}
 
                 </ThemeProvider>
 
