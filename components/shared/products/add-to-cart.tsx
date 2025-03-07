@@ -15,7 +15,7 @@ const AddToCart = ({ item }: { item: CartItem }) => {
         const res = await addItemToCart(item);
 
         if (res.success) {
-            toast(`${item.name} added to the cart`, {
+            toast(`${res.message}`, {
                 // description: "Sunday, December 03, 2023 at 9:00 AM",
                 action: {
                     label: "Go to Cart",
