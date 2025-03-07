@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
             { protocol: "https", hostname: "utfs.io", port: "", },
         ],
     },
+    telemetry: false,
 };
 
 export default withSentryConfig(nextConfig, {
