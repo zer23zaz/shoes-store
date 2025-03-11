@@ -9,7 +9,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 
 
-const AddToCart = ({ cart, item }: { cart: Cart, item: CartItem }) => {
+const AddToCart = ({ cart, item }: { cart?: Cart, item: CartItem }) => {
 
     const router = useRouter();
 
