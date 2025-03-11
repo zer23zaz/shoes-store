@@ -32,7 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 >
                     {/* <ErrorWrapper> */}
                     {children}
-                    <Toaster />
+                    <Toaster richColors />
                     {/* </ErrorWrapper> */}
 
                 </ThemeProvider>
