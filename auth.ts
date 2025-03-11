@@ -3,15 +3,14 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge';
-import type { NextAuthConfig } from 'next-auth';
-import { NextResponse } from 'next/server';
+import { authConfig } from './auth.config';
 export const config = {
     pages: {
         signIn: '/sign-in',
         error: '/sign-in',
     },
     session: {
-        strategy: "jwt",
+        strategy: "jwt" as const,
         maxAge: 30 * 24 * 60 * 60, // 30 days
         updateAge: 24 * 60 * 60, // 24 hours
     },
@@ -49,6 +48,7 @@ export const config = {
         })
     ],
     callbacks: {
+        ...authConfig.providers,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async session({ session, user, trigger, token }: any) {
             session.user.id = token.sub;
@@ -59,26 +59,8 @@ export const config = {
             }
             return session;
         },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        async authorized({ request, auth }) {
-            // check session cart cookie
-            if (!request.cookies.get('sessionCartId')) {
-                const sessionCartId = crypto.randomUUID();
-                // clone header
-                const newRequestHeader = new Headers(request.headers);
-                // create new response and add new headers
-                const response = NextResponse.next({
-                    request: {
-                        headers: newRequestHeader
-                    }
-                });
-                response.cookies.set('sessionCartId', sessionCartId);
-                return response;
-            } else {
-                return true;
-            }
-        }
+        
         // async jwt({ token, user, account, profile, isNewUser }) { return token }
     }
-} satisfies NextAuthConfig;
+} 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
