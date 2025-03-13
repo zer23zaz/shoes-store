@@ -72,9 +72,10 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                                 {cart.items.map((item) => (
                                     <TableRow key={item.slug}>
                                         <TableCell className="flex items-center">
-                                            <Link href={`/product/${item.slug}`} />
-                                            <Image src={item.image} alt={item.name} width={50} height={50} />
-                                            <span className="px-2">{item.name}</span>
+                                            <Link href={`/product/${item.slug}`} className="flex items-center">
+                                                <Image src={item.image} alt={item.name} width={50} height={50} />
+                                                <span className="px-2">{item.name}</span>
+                                            </Link>
                                         </TableCell>
                                         <TableCell className="text-center gap-2">
                                             <Button type="button" variant='outline' disabled={isPending} onClick={() => handleRemoveFromCart(item.productId)}>
