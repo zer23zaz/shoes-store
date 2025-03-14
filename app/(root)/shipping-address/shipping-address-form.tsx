@@ -43,7 +43,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
     return (<>
         <div className="max-w-md mx-auto space-y-4">
             <h1 className="h2-bold mt-4">Shipping Address</h1>
-            <p className="text-sm text-muted-fore">Please enter your shipping address</p>
+            <p className="text-sm text-muted-foreground">Please enter your shipping address</p>
             <form onSubmit={handleSubmit(OnSubmit)} className="space-y-4">
                 <div>
                     <Label htmlFor="fullName">Full name</Label>
