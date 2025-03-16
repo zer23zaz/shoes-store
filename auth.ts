@@ -4,6 +4,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge';
 import { authConfig } from './auth.config';
+import { cookies } from 'next/headers';
 export const config = {
     pages: {
         signIn: '/sign-in',
@@ -60,7 +61,38 @@ export const config = {
             return session;
         },
         
-        // async jwt({ token, user, account, profile, isNewUser }) { return token }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        async jwt({ session, user, trigger, token }: any) {
+            if (user) {
+                token.id = user.id;
+                token.role = user.role;
+                token.name = user.name !== 'NO_NAME' ? user.name : user.email.split('@')[0];
+
+                // handle cart assignment on sign-in or sign-up
+                if (trigger === 'signIn' || trigger === 'signUp') {
+                    const cookieObject = await cookies();
+                    const sessionCartId = cookieObject.get('sessionCartId')?.value;
+                    if (sessionCartId) {
+                        const sessionCart = await prisma.cart.findFirst({
+                            where: { sessionCartId },
+                            select: { id: true },
+                        });
+                        if (sessionCart) {
+                            // assign new cart to the user
+                            await prisma.cart.update({
+                                where: { id: sessionCart.id },
+                                data: {userId: user.id},
+                            });
+                        }
+                    }
+                }
+            }
+            if (session?.user?.name && trigger === 'update') {
+                token.name = session.user.name;
+            }
+            // console.log(token);
+            return token;
+        }
     }
 } 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
