@@ -52,6 +52,7 @@ const PaymentMethodForm = ({ paymentMethodType }: { paymentMethodType: string | 
                     <RadioGroup
                         className="flex flex-col space-y-2"
                         onValueChange={(value) => setValue("type", value)}
+                        defaultValue={paymentMethodType || ""}
                     >
                         {PAYMENT_METHODS.map((paymentMethod) => (
                             <div key={paymentMethod} className="flex items-center space-x-2">
