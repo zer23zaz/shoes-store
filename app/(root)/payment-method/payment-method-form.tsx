@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { updateUserPaymentMethod } from "@/lib/actions/user.actions";
-import { DEFAULT_PAYMENT_METHOD, PAYMENT_METHODS } from "@/lib/constants";
+import { PAYMENT_METHODS } from "@/lib/constants";
 import { paymentMethodSchema } from "@/lib/validator";
 import { PaymentMethod } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,7 @@ const PaymentMethodForm = ({ paymentMethodType }: { paymentMethodType: string | 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<PaymentMethod>({
         resolver: zodResolver(paymentMethodSchema),
         defaultValues: {
-            type: paymentMethodType || DEFAULT_PAYMENT_METHOD
+            type: paymentMethodType || ""
         }
     });
     const [isPending, startTransition] = useTransition();
