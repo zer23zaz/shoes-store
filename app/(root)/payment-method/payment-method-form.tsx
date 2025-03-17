@@ -19,7 +19,7 @@ const PaymentMethodForm = ({ paymentMethodType }: { paymentMethodType: string | 
 
     const router = useRouter();
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<PaymentMethod>({
+    const { register, handleSubmit, setValue, clearErrors, formState: { errors } } = useForm<PaymentMethod>({
         resolver: zodResolver(paymentMethodSchema),
         defaultValues: {
             type: paymentMethodType || ""
@@ -51,7 +51,7 @@ const PaymentMethodForm = ({ paymentMethodType }: { paymentMethodType: string | 
                 <div>
                     <RadioGroup
                         className="flex flex-col space-y-2"
-                        onValueChange={(value) => setValue("type", value)}
+                        onValueChange={(value) => { setValue("type", value); clearErrors("type"); }}
                         defaultValue={paymentMethodType || ""}
                     >
                         {PAYMENT_METHODS.map((paymentMethod) => (
