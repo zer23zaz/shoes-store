@@ -3,6 +3,7 @@
         "dbgenerated",
         "neondatabase",
         "NEXTAUTH",
+        "orderitems",
         "sonner"
     ]
 }
