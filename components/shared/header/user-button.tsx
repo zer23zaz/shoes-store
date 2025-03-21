@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { UserIcon } from "lucide-react";
 import Link from "next/link";
+import Image from 'next/image';
 
 import {
     DropdownMenu,
@@ -28,13 +29,23 @@ const UserButton = async () => {
     }
 
     const initialName = session.user?.name?.charAt(0).toUpperCase() ?? 'U';
+    const profileImage = session.user?.image;
     return (<>
         <div className="flex gap-2 item-center">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <div className="flex item-center">
-                        <Button variant='ghost' className='relative w-8 h-8 rounded-full ml-2 flex item-center justify-center bg-gray-300'>
-                            {initialName}
+                        <Button variant='ghost' className='relative border w-8 h-8 rounded-full ml-2 flex item-center justify-center bg-gray-300'>
+                            {profileImage ? (
+                                <div className="absolute inset-0">
+                                    <Image src={profileImage} alt="profile" fill className="rounded-full object-cover" />
+                                </div>
+                            ) : (
+                                <span className="text-md font-medium">
+                                    {initialName}
+                                </span>
+                            )}
+
                         </Button>
                     </div>
                 </DropdownMenuTrigger>

@@ -5,6 +5,8 @@ import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge';
 import { authConfig } from './auth.config';
 import { cookies } from 'next/headers';
+// import Google from "next-auth/providers/google"
+import GoogleProvider from "next-auth/providers/google";
 export const config = {
     pages: {
         signIn: '/sign-in',
@@ -17,6 +19,11 @@ export const config = {
     },
     adapter: PrismaAdapter(prisma),
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
+
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
@@ -92,7 +99,14 @@ export const config = {
             }
             // console.log(token);
             return token;
-        }
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        async signIn({ account, profile }: any) {
+            if (account.provider === "google") {
+                return profile.email_verified ?? false;
+            }
+            return true;
+        },
     }
 } 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

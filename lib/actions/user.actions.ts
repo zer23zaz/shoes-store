@@ -29,6 +29,19 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
  }
 
 
+// Sign in user with Google
+export async function signInWithGoogle() {
+    try {
+        await signIn('google');
+    } catch (error) {
+        if (isRedirectError(error)) {
+            throw error;
+        }
+        return { success: false, message: 'Authentication failed, please try again' }
+    }
+}
+
+
 // Sign out user
 export async function signOutUser() {
     await signOut();
