@@ -5,8 +5,7 @@ import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge';
 import { authConfig } from './auth.config';
 import { cookies } from 'next/headers';
-// import Google from "next-auth/providers/google"
-import GoogleProvider from "next-auth/providers/google";
+import Google from "next-auth/providers/google"
 export const config = {
     pages: {
         signIn: '/sign-in',
@@ -19,11 +18,7 @@ export const config = {
     },
     adapter: PrismaAdapter(prisma),
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        }),
-
+        Google,
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
