@@ -5,7 +5,9 @@ import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge';
 import { authConfig } from './auth.config';
 import { cookies } from 'next/headers';
-import Google from "next-auth/providers/google"
+import Google from "next-auth/providers/google";
+import Facebook from "next-auth/providers/facebook";
+
 export const config = {
     pages: {
         signIn: '/sign-in',
@@ -18,7 +20,7 @@ export const config = {
     },
     adapter: PrismaAdapter(prisma),
     providers: [
-        Google,
+        Google, Facebook,
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
@@ -97,11 +99,51 @@ export const config = {
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async signIn({ account, profile }: any) {
-            if (account.provider === "google") {
-                return profile.email_verified ?? false;
+            console.log({
+                "Account": account,
+                "Profile": profile
+            })
+            if (account.provider === "google" || account.provider === "facebook") {
+                let profileImage = undefined;
+                if (account.provider === "google")  profileImage = profile.picture;
+                if (account.provider === "facebook")  profileImage = profile?.picture?.data?.url;
+
+                const user = await prisma.user.findUnique({
+                    where: { email: profile.email },
+                });
+
+                if (user) {
+                    await prisma.user.update({
+                        where: { email: profile.email },
+                        data: { image: profileImage }
+                    });
+                    // Link the new provider to the existing user
+                    await prisma.account.upsert({
+                        where: {
+                            provider_providerAccountId: {
+                                provider: account.provider,
+                                providerAccountId: account.providerAccountId,
+                            },
+                        },
+                        update: {
+                            access_token: account.access_token,
+                            expires_at: account.expires_at,
+                        },
+                        create: {
+                            userId: user.id,
+                            provider: account.provider,
+                            providerAccountId: account.providerAccountId,
+                            type: account.type,
+                            access_token: account.access_token,
+                            expires_at: account.expires_at,
+                            token_type: account.token_type,
+                        },
+                    });
+                    return true; // Allow login
+                }
             }
-            return true;
-        },
+            return true; // Allow all logins
+        }
     }
 } 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
