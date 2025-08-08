@@ -1,5 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
+telemetry: false;
 const nextConfig: NextConfig = {
     images: {
         remotePatterns: [
